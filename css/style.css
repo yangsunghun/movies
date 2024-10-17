@@ -1,0 +1,106 @@
+@charset "utf-8";
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css');
+
+/* reset */
+html{ font-size: 16px; scroll-behavior: smooth; }
+html, body { width: 100%;}
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; vertical-align: baseline; background: transparent; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; color: #1a1a1a; background-color:#fff; }
+
+* { font-family: 'Pretendard', 'Noto Sans', sans-serif; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; outline: none; }
+*:before,
+*:after{ -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; }
+
+button, a{ background: none; border: 0; color: inherit !important; text-decoration: none !important; -webkit-transition: all 0.2s ease-in-out;-moz-transition: all 0.2s ease-in-out;-ms-transition: all 0.2s ease-in-out;-o-transition: all 0.2s ease-in-out; transition:all 0.2s ease-in-out; }
+
+/* -------------------------------------------- html5 block ------------------------------------------ */
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section{ display:block;}
+body{ -webkit-text-size-adjust:none; line-height: 1.5; letter-spacing: -.5px; word-break: keep-all; }
+ol, ul, li{ list-style:none; margin-bottom: 0 !important; }
+ul { padding-left: 0; }
+blockquote, q{ quotes:none;}
+blockquote:before, blockquote:after,
+q:before, q:after{ content:''; content:none; }
+img{ border:0; max-width:100%; height:auto; }
+iframe,
+embed,
+object,
+video {max-width:100%;}
+i, 
+cite, 
+em, 
+var, 
+address, 
+dfn { font-style:normal;}
+.blind,
+legend{ position:absolute; left:0; top:0; width:1px; height:1px; font-size:0; line-height:0; overflow:hidden; visibility:hidden;}
+
+
+
+
+
+/* usual */
+.inner { width: 1600px; margin: 0 auto; position: relative; }
+.flex_box { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.img_box { background-repeat: no-repeat; background-position: 50% 50%; background-size: cover; }
+.click_box { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+
+
+
+
+/*main*/
+main { min-height: 100vh; background: #000; color: #fff; }
+
+.title_section { padding: 150px 0 100px; text-align: center; }
+.title_section .total { margin: 20px 0; font-size: 18px; }
+.title_section h2 { font-size: 45px; line-height: 1.3; }
+
+.search_wrap { position: relative; max-width: 400px; margin: 0 auto; }
+.search_wrap input { width: 100%; padding: 0 40px 0 15px; height: 45px; background: transparent; border: 2px solid rgba(255, 255, 255, .3); border-radius: 50px; font-size: 18px; color: #fff; }
+.search_wrap button { position: absolute; right: 5px; top: 50%; transform: translateY(-50%); }
+
+.movie_section { padding: 100px 0; }
+
+.movie_section ul { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.movie_section ul li { position: relative; }
+.movie_section ul li img { height: 100%; object-fit: cover; }
+.movie_section ul li .info { opacity: 0; position: absolute; left: 0; top: 0; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
