@@ -22,7 +22,7 @@ window.addEventListener('scroll', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const movieUl = document.getElementById('pop_movie_list');
 
-    // 부모 요소에 클릭 이벤트 리스너 추가
+    // 위임
     movieUl.addEventListener('click', function(event) {
         const body = document.body;
         const li = event.target.closest('li');

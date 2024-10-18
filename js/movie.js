@@ -1,9 +1,9 @@
 
 let totalCount;
-let filteredMovies = []; // 검색된 영화 데이터를 저장할 배열
-let currentPage = 1; // 초기 페이지
-let totalPages = 0; // 총 페이지 수
-
+let filteredMovies = []; // 검색된 영화 데이터를 전용 배열
+let currentPage = 1; // 페이지 초기화
+let totalPages = 0; // 총 페이지 수 초기화
+let currentGenreId = null; // 장르 초기화
 
 const options = {
   method: 'GET',
@@ -14,6 +14,8 @@ const options = {
 };
 
 
+
+// 기본 리스트 출력 함수
 const fetchMovies = (page = 1) => {
   fetch(`https://api.themoviedb.org/3/movie/popular?language=ko&page=${page}`, options)
   .then(response => response.json())
@@ -21,7 +23,7 @@ const fetchMovies = (page = 1) => {
       const movieInfo = popMovies.results;
       totalPages = popMovies.total_pages; // 총 페이지 수 업데이트
       totalCount = popMovies.total_results;
-
+      console.log(movieInfo);
       renderPopMovieList(movieInfo); // 리스트 출력 함수
       
   })
@@ -32,16 +34,88 @@ const fetchMovies = (page = 1) => {
   
 };
 
+
+
 // 기본 20개 출력
 fetchMovies(currentPage);
-  
+
+
+
+// 장르 ID와 이름 매핑
+const genreMap = {
+  'SF': 878,
+  'TV영화': 10770,
+  '가족': 10751,
+  '공포': 27,
+  '다큐멘터리': 99,
+  '드라마': 18,
+  '로맨스': 10749,
+  '모험': 12,
+  '미스터리': 9648,
+  '범죄': 80,
+  '서부': 37,
+  '스릴러': 53,
+  '애니메이션': 16,
+  '액션': 28,
+  '역사': 36,
+  '음악': 10402,
+  '전쟁': 10752,
+  '코미디': 35,
+  '판타지': 14
+};
+
+
+// 장르 버튼 클릭 이벤트
+document.addEventListener('DOMContentLoaded', () => {
+const genreLinks = document.querySelectorAll('#genre_sort a');
+genreLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault(); // 기본 링크 클릭 방지
+        const genreName = event.target.textContent; // 클릭한 장르 이름
+        const genreId = genreMap[genreName] // 장르 ID 찾기
+        currentGenreId = genreMap[genreName]; // 장르 ID 페이징용
+        
+        currentPage = 1; // 초기화
+      
+        if (genreId) {
+            fetchMoviesByGenre(genreId); // 해당 장르로 영화 가져오기
+        }
+    });
+});
+
+
+});
+
+
+// 장르 sorting 함수
+const fetchMoviesByGenre = (genreId, page = 1) => {
+  fetch(`https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=ko&page=${page}`, options)
+  .then(response => response.json())
+  .then(popMovies => {
+      const movieInfo = popMovies.results;
+      const genreName = Object.keys(genreMap).find(key => genreMap[key] === genreId);
+      totalPages = popMovies.total_pages; // 총 페이지 수 업데이트
+      totalCount = popMovies.total_results;
+      console.log(genreName); // 장르 이름
+      renderPopMovieList(movieInfo); // 리스트 출력 함수
+
+      document.getElementById('search_word').textContent = `${genreName}에 관련된`;
+  })
+  .catch(error => {
+      console.error('문제가 발생했습니다:', error);
+  });
+};
 
 
 
 
 
+
+
+
+// 페이징 함수
 const changePage = (direction) => {
-  currentPage += direction; // 페이지 증가 또는 감소
+  currentPage += direction; // 페이지 누적
 
 
   if (currentPage < 1) {
@@ -53,23 +127,26 @@ const changePage = (direction) => {
   }
 
   const searchWord = document.getElementById('searchInput').value; 
-  const searchInput = searchWord.toLowerCase().replace(/\s+/g, '').trim(); // 대소문자, 공백 제거
+  const searchInput = searchWord.toLowerCase().replace(/\s+/g, '').trim(); // 필수
 
   let url;
 
   if (searchInput) {
-      // 검색어가 있을 때만..
+      // 검색어 있을 때만..
       url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchInput)}&include_adult=false&language=ko&page=${currentPage}`;
+  } else if (currentGenreId) {
+      // 장르 클릭했을 떄
+      url = `https://api.themoviedb.org/3/discover/movie?with_genres=${currentGenreId}&language=ko&page=${currentPage}`;
   } else {
-      // 검색 안하는 상태일 때
+      // 기본 상태
       url = `https://api.themoviedb.org/3/movie/popular?language=ko&page=${currentPage}`;
   }
 
   fetch(url, options)
   .then(response => response.json())
   .then(data => {
-      const movieInfo = data.results; // 검색 결과에서 영화 정보 가져오기
-      renderPopMovieList(movieInfo); // 검색 결과 렌더링
+      const movieInfo = data.results; // 검색 결과 api에서 데이터 가져오기
+      renderPopMovieList(movieInfo); // 검색 결과용 렌더링
   })
   .catch(error => {
       console.error('문제가 발생했습니다:', error);
@@ -79,7 +156,7 @@ const changePage = (direction) => {
 
 
 
-// DOM이 로드된 후 이벤트 리스너 추가
+// 이벤트 리스너 모음
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
   document.getElementById('nextPage').addEventListener('click', () => changePage(1));
@@ -96,13 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // 검색 함수
 function searchMovies(event) {
   if (event) {
-      event.preventDefault(); // 기본 폼 제출 방지
+      event.preventDefault(); // 새로고침 방지
   }
-  
-  // 검색어 가져오기
+
   const searchWord = document.getElementById('searchInput').value; 
   const searchInput = searchWord.toLowerCase().replace(/\s+/g, '').trim(); // 공백 제거
+
+  const specialChars = /[!@#$%^&*(),.?":{}|<>]/;
   
+  if (specialChars.test(searchWord)) {
+    alert('검색어에 특수문자가 포함되어 있습니다.'); // 특수문자 거르기
+    return;
+  }
   if (searchInput === '') {
       alert('검색어를 입력하세요.');
       return;
@@ -111,7 +193,7 @@ function searchMovies(event) {
   // 초기화
   currentPage = 1; 
 
-  // API 요청 URL 구성
+  // 검색 전용 API
   const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchInput)}&include_adult=false&language=ko&page=${currentPage}`;
 
   fetch(url, options)
@@ -121,7 +203,7 @@ function searchMovies(event) {
       totalPages = data.total_pages; // 총 페이지 수 업데이트
       totalCount = data.total_results; // 총 영화 수 업데이트
       console.log(totalCount);
-      // console.log(movieInfo); //
+      // console.log(movieInfo); // 결과 미리보기
       renderPopMovieList(movieInfo);
   })
   .catch(error => {
@@ -134,15 +216,15 @@ function searchMovies(event) {
 
 
 
-// 템플릿 출력.. 시간 남으면 modal 분리 예정
+// 템플릿 출력 시간 남으면 modal 분리 예정 근데 안할듯
 
 function renderPopMovieList(moviedata) {
   const movieList = document.getElementById('pop_movie_list');
 
   movieList.innerHTML = '';
   moviedata.forEach(movie => {
-    const rating = Math.round(movie.vote_average * 10) / 10;
-    const adult = movie.adult === true ? `<span class="adult_mark">19</span>` : '';
+    const rating = Math.round(movie.vote_average * 10) / 10; // 별점 소수점 한자리까지 반올림
+    const adult = movie.adult === true ? `<span class="adult_mark">19</span>` : ''; // 의미 없는 속성인듯
     const overview = movie.overview !== '' ? movie.overview : '줄거리가 없습니다.';
     const popMovie = `
       <li>
