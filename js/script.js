@@ -97,6 +97,17 @@ function renderSavedMovies() {
     const movieList = document.getElementById('pop_movie_list');
     movieList.innerHTML = ''; // 기존 내용 초기화
 
+    if(!savedMovies.length) {
+        document.getElementById('search_word').textContent = '내가 북마크한 ';
+        document.getElementById('total_movie').textContent = 0; // 총 개수
+        totalPages = 1; // 총 페이지 수
+        document.getElementById('totalPages').textContent = 1; // 총 페이지 수
+        currentPage = 1; // 현재 페이지
+        document.getElementById('currentPage').textContent = 1; // 현재 페이지
+
+        return;
+    }
+
     savedMovies.forEach(movie => {
         const movieJSON = JSON.stringify(movie);
         const rating = Math.round(movie.vote_average * 10) / 10; // 별점 소수점 한자리까지 반올림
