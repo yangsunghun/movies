@@ -46,7 +46,7 @@ button {cursor: pointer; margin: 0; padding: 0; }
 
 
 /* usual */
-.inner { width: 1600px; margin: 0 auto; position: relative; }
+.inner { width: 90%; max-width: 1600px; margin: 0 auto; position: relative; }
 .flex_box { display: flex; flex-wrap: wrap; justify-content: space-between; }
 .img_box { background-repeat: no-repeat; background-position: 50% 50%; background-size: cover; }
 .click_box { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
@@ -68,6 +68,7 @@ main { min-height: 100vh; background: #000; color: #fff; }
 #pagination button { margin: 0 20px; font-size: 20px; }
 #genre_sort { margin-top: 70px; padding: 0 100px; justify-content: flex-start; gap: 10px; }
 #genre_sort li a { display: block; padding: 8px 20px 6px; border: 1px solid rgba(255, 255, 255, .3); font-weight: 300; }
+#genre_sort li.clicked a { border-color: #fff; font-weight: 500; }
 #genre_sort li a::before { content: "#" }
 
 
@@ -89,7 +90,7 @@ main { min-height: 100vh; background: #000; color: #fff; }
 
 .modal { opacity: 0; pointer-events: none; position: fixed; z-index: 99; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, .4); backdrop-filter: blur(2px); transition: .3s; }
 .modal.open { opacity: 1; pointer-events: auto; }
-.modal_window { position: absolute; padding: 60px 40px; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 1320px; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, .6); border-radius: 5px; background-position: 100% 0; background-size: auto 100%; }
+.modal_window { position: absolute; padding: 60px 40px; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 1320px; max-height: 80vh; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, .6); border-radius: 5px; background-position: 100% 0; background-size: auto 100%; background-color: #333; }
 .modal_window::after { content: ""; z-index: 1; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 105%; height: 110%; background: linear-gradient(to right, rgba(0, 0, 0, .9), rgba(0, 0, 0, .8), rgba(0, 0, 0, .7), transparent); }
 .modal .close { position: absolute; z-index: 99; right: 30px; top: 20px; font-size: 30px; }
 .modal .top { position: relative; z-index: 9; }
@@ -104,10 +105,10 @@ main { min-height: 100vh; background: #000; color: #fff; }
 .modal .info_detail .overview { max-width: 91%; margin-top: 30px; font-size: 18px; font-weight: 300; line-height: 1.7; }
 .modal .bookmark { position: absolute; z-index: 99; right: 80px; top: 25px; }
 
-.btn_style { padding: 10px 30px; font-weight: 500; display: flex; justify-content: center; align-items: center; font-size: 18px; border: 1px solid rgba(255, 255, 255, .5); }
+.btn_style { padding: 10px 30px; font-weight: 500; display: flex; justify-content: center; align-items: center; font-size: 18px; border: 1px solid rgba(255, 255, 255, .5); transition: .3s; }
 .btn_style svg { width: 20px; }
-
-
+.bookmarked .btn_style, .btn_style.active { background: #fff; }
+.bookmarked .btn_style svg path, .btn_style.active svg path { fill: #e8344e !important; }
 
 
 
