@@ -70,7 +70,7 @@ main { min-height: 100vh; background: #000; color: #fff; }
 #genre_sort li a { display: block; padding: 8px 20px 6px; border: 1px solid rgba(255, 255, 255, .3); font-weight: 300; }
 #genre_sort li.clicked a { border-color: #fff; font-weight: 500; }
 #genre_sort li a::before { content: "#" }
-
+#genre_sort li:first-child a::before { display: none; }
 
 .search_wrap { position: relative; max-width: 400px; margin: 0 auto; }
 .search_wrap input { width: 100%; padding: 0 40px 0 15px; height: 45px; background: transparent; border: 2px solid rgba(255, 255, 255, .3); border-radius: 50px; font-size: 18px; color: #fff; }
