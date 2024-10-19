@@ -99,11 +99,11 @@ function renderSavedMovies() {
 
     if(!savedMovies.length) {
         document.getElementById('search_word').textContent = '내가 북마크한 ';
-        document.getElementById('total_movie').textContent = 0; // 총 개수
+        document.getElementById('total_movie').textContent = 0;
         totalPages = 1; // 총 페이지 수
-        document.getElementById('totalPages').textContent = 1; // 총 페이지 수
+        document.getElementById('totalPages').textContent = 1;
         currentPage = 1; // 현재 페이지
-        document.getElementById('currentPage').textContent = 1; // 현재 페이지
+        document.getElementById('currentPage').textContent = 1;
 
         return;
     }
