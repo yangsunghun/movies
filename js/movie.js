@@ -27,6 +27,7 @@ async function fetchMovies (page = 1) {
 
     renderPopMovieList(movieInfo); // 리스트 출력 함수
 
+
   } catch (error) {
     console.error('문제가 발생했습니다:', error); // 에러 처리
   }
